@@ -72,7 +72,7 @@ covid19_cr %>%
   kable_styling() %>%
   scroll_box(
     width = "630px", 
-    height = "600px", 
+    height = "570px", 
     fixed_thead = TRUE
   )
 ```
