@@ -2,52 +2,78 @@
 title: "COVID-19 en Costa Rica"
 output: 
   flexdashboard::flex_dashboard:
-    orientation: rows
+    orientation: columns
     vertical_layout: fill
 ---
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+
+library(sf)
+
+library(leaflet)
+
+library(knitr)
+
+library(kableExtra)
+
+library(dplyr)
+
+library(spData)
+
+
+#Covid-19 en Costa Rica
+covid19_cr = (st_read("https://raw.githubusercontent.com/geoprocesamiento-2020i/datos/master/covid19/casos/cr/cr-covid19-cantones.geojson"))
+
 ```
 
-Column {data-width=500}
+Provincias {data-width=500}
 =======================================================================
------------------------------------------------------------------------
 
+
+Column {data-width=500}
+-----------------------------------------------------------------------
 ### Chart A
 
 ```{r}
-
 ```
+
 ### Chart B
 
 ```{r}
+```
+Column {data-width=500}
+-----------------------------------------------------------------------
+### Chart Bb
 
+```{r}
 ```
 
-Column {data-width=500}
+Cantones {data-width=500}
 =======================================================================
------------------------------------------------------------------------
 
+Column {data-width=500}
+-----------------------------------------------------------------------
 ### Chart C
 
 ```{r}
-
 ```
 
-### Chart D
-
-```{r}
-
-```
 Column {data-width=500}
-=======================================================================
 -----------------------------------------------------------------------
-
-### Chart E
+### Casos confirmados, recuperados y fallecidos de COVID-19 por cantón
 
 ```{r}
-
+covid19_cr %>%
+  select(Cantón = canton, Confirmados = confirmados, Recuperados =recuperados, Fallecidos = muertes)%>%
+  arrange(Cantón) %>%
+  st_drop_geometry() %>%
+  kable()%>%
+  kable_styling() %>%
+  scroll_box(
+    width = "630px", 
+    height = "600px", 
+    fixed_thead = TRUE
+  )
 ```
-
 
