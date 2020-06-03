@@ -2,8 +2,9 @@
 title: "COVID-19 en Costa Rica"
 output: 
   flexdashboard::flex_dashboard:
-    orientation: columns
+    orientation: rows
     vertical_layout: fill
+    
 ---
 
 ```{r setup, include=FALSE}
@@ -28,18 +29,55 @@ covid19_cr = (st_read("https://raw.githubusercontent.com/geoprocesamiento-2020i/
 
 ```
 
-Provincias {data-width=500}
+
+País y Provincias {data-width=500}
 =======================================================================
 
 
-Column {data-width=500}
+Column {data-width=300}
 -----------------------------------------------------------------------
-### Chart A
+
+### Casos confirmados de COVID-19 en Costa Rica
 
 ```{r}
+confirmados_total = sum(as.numeric(covid19_cr$confirmados), na.rm = TRUE)
 
-
+valueBox(confirmados_total, icon = "fa-pencil", color = "purple")
 ```
+
+### Casos recuperados de COVID-19 en Costa Rica
+
+```{r}
+recuperados_total = sum(as.numeric(covid19_cr$recuperados), na.rm = TRUE)
+
+valueBox(recuperados_total, icon = "fa-pencil", color = "purple")
+```
+
+
+### Casos activos de COVID-19 en Costa Rica
+
+```{r}
+activos_total = sum(as.numeric(covid19_cr$activos), na.rm = TRUE)
+
+valueBox(activos_total, icon = "fa-pencil", color = "purple")
+```
+
+### Casos de fallecidos por COVID-19 en Costa Rica
+
+```{r}
+muertes_total = sum(as.numeric(covid19_cr$muertes), na.rm = TRUE)
+
+valueBox(muertes_total, icon = "fa-pencil", color = "purple")
+```
+
+Column {data-width=700}
+-----------------------------------------------------------------------
+
+### Chart Bb
+
+```{r}
+```
+
 
 ### Casos confirmados de COVID-19 por provincia en Costa Rica
 
@@ -60,12 +98,7 @@ ggplot(confirmados_cr, aes(x=reorder(provincia,-confirmados), y=confirmados)) +
 
 ```
 
-Column {data-width=500}
------------------------------------------------------------------------
-### Chart Bb
 
-```{r}
-```
 
 Cantones {data-width=500}
 =======================================================================
@@ -77,9 +110,8 @@ Column {data-width=500}
 ```{r}
 ```
 
-Column {data-width=500}
------------------------------------------------------------------------
-### Casos confirmados, recuperados y fallecidos de COVID-19 por cantón en Costa Rica
+
+### Casos confirmados, recuperados, fallecidos y activos de COVID-19 por cantón en Costa Rica
 
 ```{r}
 covid19_cr %>%
