@@ -21,6 +21,7 @@ library(dplyr)
 
 library(spData)
 
+library(ggplot2)
 
 #Covid-19 en Costa Rica
 covid19_cr = (st_read("https://raw.githubusercontent.com/geoprocesamiento-2020i/datos/master/covid19/casos/cr/cr-covid19-cantones.geojson"))
@@ -38,10 +39,25 @@ Column {data-width=500}
 ```{r}
 ```
 
-### Chart B
+### Casos confirmados de COVID-19 por provincia en Costa Rica
 
 ```{r}
+
+confirmados_cr = aggregate(
+  data = covid19_cr, 
+  confirmados ~ provincia, 
+  FUN = sum, 
+  na.rm = TRUE
+)
+
+ggplot(confirmados_cr, aes(x=reorder(provincia,-confirmados), y=confirmados)) +
+   xlab("Provincia") + 
+   ylab("Casos de COVID-19 ") +  
+   geom_col() +
+   geom_text(aes(label= confirmados), vjust=-0.3, size=3.5)
+
 ```
+
 Column {data-width=500}
 -----------------------------------------------------------------------
 ### Chart Bb
@@ -61,7 +77,7 @@ Column {data-width=500}
 
 Column {data-width=500}
 -----------------------------------------------------------------------
-### Casos confirmados, recuperados y fallecidos de COVID-19 por cantón
+### Casos confirmados, recuperados y fallecidos de COVID-19 por cantón en Costa Rica
 
 ```{r}
 covid19_cr %>%
