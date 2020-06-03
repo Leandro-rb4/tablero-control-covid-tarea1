@@ -37,6 +37,8 @@ Column {data-width=500}
 ### Chart A
 
 ```{r}
+
+
 ```
 
 ### Casos confirmados de COVID-19 por provincia en Costa Rica
@@ -81,7 +83,7 @@ Column {data-width=500}
 
 ```{r}
 covid19_cr %>%
-  select(Cantón = canton, Confirmados = confirmados, Recuperados =recuperados, Fallecidos = muertes)%>%
+  select(Cantón = canton, Confirmados = confirmados, Recuperados =recuperados, Fallecidos = muertes, Activos = activos)%>%
   arrange(Cantón) %>%
   st_drop_geometry() %>%
   kable()%>%
