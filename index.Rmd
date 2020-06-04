@@ -8,7 +8,7 @@ output:
 ---
 <style>                     
 .navbar {
-  background-color:black;
+  background-color:grey;
   border-color:black;
 }
 
@@ -35,6 +35,9 @@ library(spData)
 
 library(ggplot2)
 
+library(RColorBrewer)
+
+library(sp)
 
 #Covid-19 en Costa Rica
 covid19_cr = (st_read("https://raw.githubusercontent.com/geoprocesamiento-2020i/datos/master/covid19/casos/cr/cr-covid19-cantones.geojson"))
@@ -71,7 +74,7 @@ valueBox(recuperados_total, icon = "fa-pencil")
 ```{r}
 activos_total = sum(as.numeric(covid19_cr$activos), na.rm = TRUE)
 
-valueBox(activos_total, icon = "fa-pencil", color = "grey")
+valueBox(activos_total, icon = "fa-pencil", color = "darkgrey")
 ```
 
 ### Total de personas fallecidas
@@ -79,7 +82,7 @@ valueBox(activos_total, icon = "fa-pencil", color = "grey")
 ```{r}
 muertes_total = sum(as.numeric(covid19_cr$muertes), na.rm = TRUE)
 
-valueBox(muertes_total, icon = "fa-pencil", color = "black")
+valueBox(muertes_total, icon = "fa-pencil", color = "grey")
 ```
 
 Column {data-width=700}
@@ -119,6 +122,18 @@ Column {data-width=500}
 ### Mapa de casos confirmados por cantón
 
 ```{r}
+qpal <- colorQuantile("Oranges", covid19_cr$confirmados, n = 7, na.color = "white")
+
+    leaflet() %>% 
+    addPolygons(data = covid19_cr,
+                fillColor = ~qpal(confirmados),
+                weight = 2,
+                opacity = 1,
+                color = "white",
+                dashArray = "3",
+                fillOpacity = 0.7,
+popup = paste(covid19_cr$canton, "Confirmados:", covid19_cr$confirmados, "Recuperados:", covid19_cr$recuperados, "Activos:", covid19_cr$activos, "Muertes:", covid19_cr$muertes, sep = '<br/>')) 
+
 ```
 
 
